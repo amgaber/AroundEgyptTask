@@ -12,23 +12,26 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
-struct Json4Swift_Base : Codable {
-	let meta : Meta?
-	let data : [PlaceData]?
-//	let pagination : Pagination?
+struct Period : Codable {
+	let id : String?
+	let value : String?
+	let created_at : String?
+	let updated_at : String?
 
 	enum CodingKeys: String, CodingKey {
 
-		case meta = "meta"
-		case data = "data"
-//		case pagination = "pagination"
+		case id = "id"
+		case value = "value"
+		case created_at = "created_at"
+		case updated_at = "updated_at"
 	}
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		meta = try values.decodeIfPresent(Meta.self, forKey: .meta)
-		data = try values.decodeIfPresent([PlaceData].self, forKey: .data)
-//		pagination = try values.decodeIfPresent(Pagination.self, forKey: .pagination)
+		id = try values.decodeIfPresent(String.self, forKey: .id)
+		value = try values.decodeIfPresent(String.self, forKey: .value)
+		created_at = try values.decodeIfPresent(String.self, forKey: .created_at)
+		updated_at = try values.decodeIfPresent(String.self, forKey: .updated_at)
 	}
 
 }

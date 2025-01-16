@@ -12,7 +12,7 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
-class Data : Codable, Identifiable {
+class PlaceData : Codable, Identifiable {
 	let id : String?
 	let title : String?
 	let cover_photo : String?
@@ -25,7 +25,7 @@ class Data : Codable, Identifiable {
 	let city : City?
 	let tour_html : String?
 	let famous_figure : String?
-	let period : String?
+    let period : Period?
 	let era : Era?
 	let founded : String?
 	let detailed_description : String?
@@ -37,7 +37,7 @@ class Data : Codable, Identifiable {
 	let ticket_prices : [Ticket_prices]?
 	let experience_tips : [String]?
 	let is_liked : String?
-	let reviews : [String]?
+    let reviews : [Reviews]?
 	let rating : Int?
 	let reviews_no : Int?
 	let audio_url : String?
@@ -55,7 +55,7 @@ class Data : Codable, Identifiable {
           city : City? = nil,
           tour_html : String = "",
           famous_figure : String? = "",
-          period : String? = "",
+          period : Period? = nil,
           era : Era? = nil,
           founded : String? = "",
           detailed_description : String? = "",
@@ -67,7 +67,7 @@ class Data : Codable, Identifiable {
           ticket_prices : [Ticket_prices]? = nil,
           experience_tips : [String]? = nil,
           is_liked : String? = "",
-          reviews : [String]? = nil,
+          reviews : [Reviews]? = nil,
           rating : Int? = nil,
           reviews_no : Int? = nil,
           audio_url : String? = "",
@@ -151,7 +151,7 @@ class Data : Codable, Identifiable {
 		city = try values.decodeIfPresent(City.self, forKey: .city)
 		tour_html = try values.decodeIfPresent(String.self, forKey: .tour_html)
 		famous_figure = try values.decodeIfPresent(String.self, forKey: .famous_figure)
-		period = try values.decodeIfPresent(String.self, forKey: .period)
+		period = try values.decodeIfPresent(Period.self, forKey: .period)
 		era = try values.decodeIfPresent(Era.self, forKey: .era)
 		founded = try values.decodeIfPresent(String.self, forKey: .founded)
 		detailed_description = try values.decodeIfPresent(String.self, forKey: .detailed_description)
@@ -163,7 +163,7 @@ class Data : Codable, Identifiable {
 		ticket_prices = try values.decodeIfPresent([Ticket_prices].self, forKey: .ticket_prices)
 		experience_tips = try values.decodeIfPresent([String].self, forKey: .experience_tips)
 		is_liked = try values.decodeIfPresent(String.self, forKey: .is_liked)
-		reviews = try values.decodeIfPresent([String].self, forKey: .reviews)
+        reviews = try values.decodeIfPresent([Reviews].self, forKey: .reviews)
 		rating = try values.decodeIfPresent(Int.self, forKey: .rating)
 		reviews_no = try values.decodeIfPresent(Int.self, forKey: .reviews_no)
 		audio_url = try values.decodeIfPresent(String.self, forKey: .audio_url)

@@ -24,6 +24,9 @@ struct ContentView: View {
         .listStyle(.plain)
         .navigationTitle("Welcome!")
         .searchable(text: $listViewModel.searchText)
+        .task {
+            await listViewModel.fetchData(.recentExperiences)
+        }
     }
 }
 
