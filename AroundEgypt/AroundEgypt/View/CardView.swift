@@ -80,6 +80,8 @@ struct CardView: View {
                 }
                 .padding()
             }
+            .padding(.horizontal)
+
             HStack{
                 Text(data.title ?? "Unknown")
                 Spacer()
@@ -96,7 +98,8 @@ struct CardView: View {
                     }
                 }
             }
-            .padding()
+            .padding(.horizontal)
+            Spacer()
         }
 
     }
