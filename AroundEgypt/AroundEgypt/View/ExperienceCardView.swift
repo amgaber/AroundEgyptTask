@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
+
 
 struct ExperienceCardView: View {
-    var data: PlaceData
+    @StateObject var listViewModel = ListViewModel(dataService: .shared)
+    
+    var data: PlaceModel
     @Binding var likes: Int
 
     var likeImage = Image(systemName: "heart.fill")
@@ -17,27 +21,15 @@ struct ExperienceCardView: View {
     var body: some View {
         VStack{
             ZStack{
-                AsyncImage(url: URL(string: data.cover_photo ?? ""),scale: 3) { phase in
-                           switch phase {
-                               case .empty:
-                                   ZStack {
-                                       Color.gray
-                                       ProgressView()
-                                   }
-                               case .success(let image):
-                                   image
-                                   .resizable()
-                                   .scaledToFit()
-                               case .failure(let error):
-                               
-                                   ZStack {
-                                       Color.gray
-                                       Text(error.localizedDescription)
-                                   }
-                               @unknown default:
-                                   EmptyView()
-                           }
-                       }
+                AsyncCachedImage(url: URL(string: data.cover_photo ?? "")) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .frame(height: 300)
+
                 Button(action: {
                                 // Handle your custom action
                                 print("Custom action tapped")
@@ -117,8 +109,8 @@ struct ExperienceCardView: View {
 }
 
 #Preview {
-    let testData = PlaceData.init(id: "1", title: "Test", cover_photo: "https://aroundegypt-production.s3.eu-central-1.amazonaws.com/21/DBiLufkgRD42qnvG83yuJzXiaV2NVp-metad214aWhEdnY2T2dvTzRobXRNcThkRXZOTk5sMjh5SVZCMW5BV2ZsMi5qcGVn-.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIASZMRQEMKBKVP4NHO%2F20250116%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250116T105919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=172800&X-Amz-Signature=546216a2381bba1c3f23933ac2f23d381555d9ea93ae1ea1102eade844374263"
-                             , description: "write description here", views_no: 2, likes_no: 5)
+    let testData = PlaceModel.init(id: "1", title: "Test", cover_photo: "https://aroundegypt-production.s3.eu-central-1.amazonaws.com/21/DBiLufkgRD42qnvG83yuJzXiaV2NVp-metad214aWhEdnY2T2dvTzRobXRNcThkRXZOTk5sMjh5SVZCMW5BV2ZsMi5qcGVn-.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIASZMRQEMKBKVP4NHO%2F20250116%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250116T105919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=172800&X-Amz-Signature=546216a2381bba1c3f23933ac2f23d381555d9ea93ae1ea1102eade844374263"
+                                  , descriptionText: "write description here", views_no: 2, likes_no: 5)
     
-    ExperienceCardView(data: testData, likes: .constant(4))
+    ExperienceCardView(data: testData, likes: .constant(4)) .modelContainer(for: [PlaceModel.self],inMemory: true)
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct AroundEgyptApp: App {
@@ -13,5 +14,6 @@ struct AroundEgyptApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: PlaceModel.self)
     }
 }
