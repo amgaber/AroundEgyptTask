@@ -21,6 +21,9 @@ class ListViewModel: ObservableObject {
         self.dataService = dataService
         
         self.data = dataService.fetchPlaces()
+        
+//        self.data = self.data.filter({ $0.city?.name?.lowercased().contains(searchText.lowercased()) ?? false })
+        
     }
     
     func fetchData(_ endpoint: Endpoint) async {

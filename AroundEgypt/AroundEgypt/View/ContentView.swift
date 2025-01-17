@@ -10,21 +10,33 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var listViewModel = ListViewModel(dataService: .shared)
     
+    @State private var searchText = ""
+
     var body: some View {
         NavigationStack{
-            List{
-                WelcomeCardView()
-                RecommendedExperiencesListView()
-                RecentListView()
-            }
-            .listStyle(.plain)
-            .searchable(
-                text: $listViewModel.searchText,
-                prompt: "Try LUXOR")
+                List{
+                    WelcomeCardView()
+                    RecommendedExperiencesListView()
+                    RecentListView()
+                }
+                
+                .listStyle(.plain)
+                .searchable(
+                    text: $searchText,
+                    //                text: $listViewModel.searchText,
+                    prompt: "Try LUXOR")
         }
       
         .navigationTitle("Welcome!")
     }
+    
+    var searchResults: [PlaceModel] {
+            if searchText.isEmpty {
+                return listViewModel.data
+            } else {
+                return listViewModel.data.filter { $0.title?.contains(searchText) ?? false }
+            }
+        }
 }
 
 #Preview {

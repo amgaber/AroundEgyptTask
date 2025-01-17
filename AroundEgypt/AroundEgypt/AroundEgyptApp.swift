@@ -14,6 +14,6 @@ struct AroundEgyptApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: PlaceModel.self)
+        .modelContainer(for: [PlaceModel.self])
     }
 }
