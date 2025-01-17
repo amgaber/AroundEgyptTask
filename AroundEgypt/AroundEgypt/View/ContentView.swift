@@ -8,9 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var listViewModel = ListViewModel(dataService: .shared)
     
     var body: some View {
-        RecentListView()
+        NavigationStack{
+            List{
+                WelcomeCardView()
+                RecommendedExperiencesListView()
+                RecentListView()
+            }
+            .listStyle(.plain)
+            .searchable(
+                text: $listViewModel.searchText,
+                prompt: "Try LUXOR")
+        }
+      
+        .navigationTitle("Welcome!")
     }
 }
 
