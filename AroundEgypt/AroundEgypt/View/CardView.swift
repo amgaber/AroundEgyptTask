@@ -23,13 +23,11 @@ struct CardView: View {
                 AsyncCachedImage(url: URL(string: data.cover_photo ?? "")) { image in
                             image
                                 .resizable()
-                                .aspectRatio(contentMode: .fill)
                         } placeholder: {
                             ProgressView()
                         }
                         .clipShape(.rect(cornerRadius: 7))
-                        .scaledToFill()
-                        .frame(height: 150)
+                        .scaledToFit()
                 
                 HStack{
                     VStack(){
