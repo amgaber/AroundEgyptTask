@@ -37,7 +37,7 @@ let baseURLString = "https://aroundegypt.34ml.com"
         case .baseURL: return URL(string: path)
         case .recommendedExperiences: return URL(string: path)
         case .recentExperiences: return URL(string: path)
-        case .searchExperiences(let searchText): return URL(string: path + "?filter[search]=\(searchText)")
+        case .searchExperiences(let searchText): return URL(string: path + "?filter[title]=\(searchText)")
         case .singleExperience(let expID): return URL(string: path + "/\(expID)")
             
             

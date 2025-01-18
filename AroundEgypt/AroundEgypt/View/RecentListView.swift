@@ -20,7 +20,7 @@ struct RecentListView: View {
                 Text("Most Recent")
                     .font(.title2)
                     .bold()
-                ForEach(listViewModel.data) { data in
+                ForEach(listViewModel.filteredPlaces) { data in
                 
                     Button {
                         selectedCard = data
@@ -33,8 +33,15 @@ struct RecentListView: View {
             }
             .listRowSeparator(.hidden)
             .frame(minHeight: 500)
+            .searchable(
+                text: $listViewModel.searchText,
+                prompt: "Try LUXOR")
             .task {
-                await listViewModel.fetchData(.recentExperiences)
+                if let str = listViewModel.searchText as? String, !str.isEmpty {
+                    await listViewModel.fetchData(.searchExperiences(listViewModel.searchText))
+                }else {
+                    await listViewModel.fetchData(.recentExperiences)
+                }
             }
             .sheet(item: $selectedCard) { data in
                 ExperiencDetailsView(data: data)

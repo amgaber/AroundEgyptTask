@@ -21,10 +21,14 @@ class ListViewModel: ObservableObject {
         self.dataService = dataService
         
         self.data = dataService.fetchPlaces()
-        
-//        self.data = self.data.filter({ $0.city?.name?.lowercased().contains(searchText.lowercased()) ?? false })
-        
     }
+    
+    var filteredPlaces: [PlaceModel] {
+        guard !searchText.isEmpty else { return data }
+            return self.data.filter { place in
+                place.city?.name?.lowercased().contains(searchText.lowercased()) ?? false
+            }
+        }
     
     func fetchData(_ endpoint: Endpoint) async {
             do {
